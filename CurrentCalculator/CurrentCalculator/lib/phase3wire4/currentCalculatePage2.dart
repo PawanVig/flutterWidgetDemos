@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 
 class CC_Page2 extends StatefulWidget{
 final String current;
-CC_Page2(this.current);
+final String power;
+final String voltage;
+final String pf;
+
+CC_Page2(this.current,this.power,this.voltage,this.pf);
 
 @override
 State<StatefulWidget> createState(){
@@ -26,7 +30,7 @@ class _CC_Page2_State extends State<CC_Page2>{
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center ,
           children: <Widget>[
-            Text("Current Page 2",
+            Text( widget.pf ,
             style: TextStyle(fontSize: 32),
             )
           ],

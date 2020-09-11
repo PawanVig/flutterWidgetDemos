@@ -29,7 +29,8 @@ class MyApp extends StatelessWidget {
              case "current_3phase_4wire" :
                     final String current = pathElements[2];
                      return MaterialPageRoute(
-                       builder: (BuildContext) => CC_Page2(pathElements[2]),
+                       builder: (BuildContext) => CC_Page2(
+                         pathElements[2],pathElements[3],pathElements[4],pathElements[5]),
                      );
              default:
                 return null;

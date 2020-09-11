@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 
 class CurrentCalculator extends StatefulWidget{
 
@@ -96,9 +97,10 @@ class CurrentCalculatorState extends State<CurrentCalculator>{
   @override
   Widget build(BuildContext context)
   {
-    return Scaffold(
+    return Scaffold(  
       appBar: AppBar(title: Text("Current Calculator"),),
-      body: Container(
+      body: ListView(            
+                   children: [         Container(
         margin: EdgeInsets.all(20),
         child: Form(
           key: _formkey,
@@ -124,7 +126,12 @@ class CurrentCalculatorState extends State<CurrentCalculator>{
                   print("power is $_power ");
                   print("pf is $_pf ");
                   print("voltage is $_voltage ");
-                  Navigator.pushNamed(context, "/current_3phase_4wire/$_power");
+                  double power= double.parse(_power);
+                  double voltage= double.parse(_voltage);
+                  double pf= double.parse(_pf);
+                  double current = (power * 1000) /( sqrt(3) * voltage * pf );
+                  String result_current = current.toStringAsFixed(2);
+                  Navigator.pushNamed(context, "/current_3phase_4wire/$result_current/$power/$voltage/$pf");
 
                 }
               )
@@ -132,7 +139,10 @@ class CurrentCalculatorState extends State<CurrentCalculator>{
             ]
           ),
         )
-      ),
+      ),   
+                             
+                              ]         
+                    )
     );
 
   }
