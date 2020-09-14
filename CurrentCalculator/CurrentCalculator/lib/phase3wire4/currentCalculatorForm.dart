@@ -15,7 +15,7 @@ class CurrentCalculatorState extends State<CurrentCalculator>{
   String _voltage;
   String _pf;
 
-  List<String> _voltage_3phase4wire = <String>['','121', '120/240'];
+  List<String> _voltage_3phase4wire = <String>['','120/208', '347/600'];
   String _selected_voltage = '';
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -110,10 +110,10 @@ Widget _buildVoltage2()
   onSaved: (String value){
     //'120/121', '120/240'
     print("in saved");
-      if(value == "120/121")
-       { _voltage = "121";}
-        else if(value == "120/240")
-        { _voltage= "240";}
+      if(value == "120/208")
+       { _voltage = "208";}
+        else if(value == "347/600")
+        { _voltage= "600";}
       }
 
 
