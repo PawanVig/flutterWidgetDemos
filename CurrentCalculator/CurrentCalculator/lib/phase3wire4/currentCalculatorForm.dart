@@ -15,6 +15,9 @@ class CurrentCalculatorState extends State<CurrentCalculator>{
   String _voltage;
   String _pf;
 
+  List<String> _voltage_3phase4wire = <String>['','121', '120/240'];
+  String _selected_voltage = '';
+
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
 
   Widget _buildPower()
@@ -68,6 +71,56 @@ class CurrentCalculatorState extends State<CurrentCalculator>{
       );
   }
 
+Widget _buildVoltage2()
+  {
+    return new FormField<String>(
+  builder: (FormFieldState<String> state) {
+    return InputDecorator(
+      decoration: InputDecoration(
+        //icon: const Icon(Icons.power),
+        labelText: 'Voltage',
+        errorText: state.hasError ? state.errorText : null,
+      ),
+      isEmpty: _selected_voltage == '',
+      child: new DropdownButtonHideUnderline(
+        child: new DropdownButton<String>(
+          value: _selected_voltage,
+          isDense: true,
+          onChanged: (String newValue) {
+            setState(() {
+              
+              _selected_voltage = newValue;
+              state.didChange(newValue);
+            });
+          },
+          items: _voltage_3phase4wire.map((String value) {
+            return new DropdownMenuItem<String>(
+              value: value,
+              child: new Text(value),
+            );
+          }).toList(),
+        ),
+     ),
+    );
+  },
+  validator: (val) {
+    print("in validator");
+    return val != '' ? null : 'Please select a Voltage';
+  },
+  onSaved: (String value){
+    //'120/121', '120/240'
+    print("in saved");
+      if(value == "120/121")
+       { _voltage = "121";}
+        else if(value == "120/240")
+        { _voltage= "240";}
+      }
+
+
+);
+
+
+  }
 
   Widget _buildVoltage()
   {
@@ -108,7 +161,7 @@ class CurrentCalculatorState extends State<CurrentCalculator>{
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               _buildPower(),
-              _buildVoltage(),
+              _buildVoltage2(),
               _buildPf(),
               SizedBox(height: 100,),
               RaisedButton(
