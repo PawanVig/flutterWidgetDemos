@@ -19,14 +19,42 @@ State<StatefulWidget> createState(){
 class _CC_Page2_State extends State<CC_Page2>{
 
 TextEditingController voltscontroller = new TextEditingController();
-  
-  bool _enabled = false;
+TextEditingController currentcontroller = new TextEditingController();
+TextEditingController purposedServiceSizeController = new TextEditingController();
+
+int proposed_service_size(double current_val){
+
+  double i=110;
+  int proposed_service_size=100;
+   if(current_val<=110)
+     {  print("returning from if proposed_service_size = $proposed_service_size");
+       return proposed_service_size;
+     }
+
+  for(;;i=i+100)
+  { print("in loop of proposed_service_size i= $i");
+    print("in loop of proposed_service_size = $proposed_service_size");
+    proposed_service_size=proposed_service_size+100;
+
+    if((current_val>i) && (current_val<=(i+100)) )
+    {
+      print("returning from loop proposed_service_size = $proposed_service_size");
+      return proposed_service_size;
+    }
+    
+  }
+
+}
   
 
 @override
   Widget build(BuildContext context){
 
     voltscontroller.text = widget.voltage.toString();
+    double current_val = double.parse(widget.current.toString());
+    int pss= proposed_service_size(current_val);
+    purposedServiceSizeController.text = pss.toString();
+    currentcontroller.text = widget.current.toString();
     ThemeData theme = Theme.of(context);
     return Scaffold(
       appBar:AppBar(
@@ -38,22 +66,23 @@ TextEditingController voltscontroller = new TextEditingController();
       body:Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center ,
-          children: <Widget>[ new TextField(
+          children: <Widget>[ TextField(
+          decoration: InputDecoration(labelText: "Current "),
+          controller: currentcontroller,
+          enabled:false
+          ),
+          TextField(
           decoration: InputDecoration(labelText: "Voltage "),
           controller: voltscontroller,
           enabled:false
-    
-  )
+          ),
+          TextField(
+          decoration: InputDecoration(labelText: "Puposed Service Size "),
+          controller: purposedServiceSizeController,
+          enabled:false
+          )
 
-            // new TextFormField(
-            //   controller: voltscontroller,
-            //   style: theme.textTheme.subhead.copyWith(
-            //     color: theme.disabledColor,
-            //   ),
-            //   decoration: new InputDecoration(
-            //     hintText: _enabled ? 'Type something' : '',
-            //   ),
-            // )
+             
           ],
           )
           )
