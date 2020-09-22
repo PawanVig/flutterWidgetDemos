@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './phase3wire4/currentCalculatorForm.dart';
 import './phase3wire4/currentCalculatePage2.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,48 +17,55 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: CurrentCalculator(),
+      home: SplashScreen(
+          seconds: 5,
+          // the widget to run after running your splashscreen for 1 sec
+          navigateAfterSeconds: CurrentCalculator(),
+          title: Text(' '),
+          image: Image.asset('assets/h1.png'),
+          backgroundColor: Colors.white,
+          styleTextUnderTheLoader: TextStyle(),
+          photoSize: 100.0,
+          loaderColor: Colors.red),
       onGenerateRoute: (RouteSettings settings) {
         // /detailId/5
-           final List<String> pathElements = settings.name.split("/");
+        final List<String> pathElements = settings.name.split("/");
 
-           if(pathElements[0] != ""){
-             return null;
-           }
+        if (pathElements[0] != "") {
+          return null;
+        }
 
-           switch(pathElements[1]) {
-             case "current_3phase_4wire" :
-                    final String current = pathElements[2];
-                     return MaterialPageRoute(
-                       builder: (BuildContext) => CC_Page2(
-                         pathElements[2],pathElements[3],pathElements[4],pathElements[5]),
-                     );
-             default:
-                return null;
-            //  case "feed" :
-            //          return MaterialPageRoute(
-            //            builder: (BuildContext) => FeedPage(),
-            //          );
+        switch (pathElements[1]) {
+          case "current_3phase_4wire":
+            final String current = pathElements[2];
+            return MaterialPageRoute(
+              builder: (BuildContext) => CC_Page2(pathElements[2],
+                  pathElements[3], pathElements[4], pathElements[5]),
+            );
+          default:
+            return null;
+          //  case "feed" :
+          //          return MaterialPageRoute(
+          //            builder: (BuildContext) => FeedPage(),
+          //          );
 
-            //  case "detailId":
-            //        final String detailId = pathElements[2];  
-            //        // /detailId/5
-            //        // [0]/[1]/[2]
-            //        print("DetailId: $detailId")  ;
+          //  case "detailId":
+          //        final String detailId = pathElements[2];
+          //        // /detailId/5
+          //        // [0]/[1]/[2]
+          //        print("DetailId: $detailId")  ;
 
-            //        String itemName = "Item Detail: $detailId";
+          //        String itemName = "Item Detail: $detailId";
 
-            //        if(detailId.isEmpty)
-            //        {return MaterialPageRoute(
-            //          builder: (BuildContext)=> DetailPage("No Detail"));
-            //          }
-            //          return MaterialPageRoute(
-            //          builder: (BuildContext)=> DetailPage(itemName));
+          //        if(detailId.isEmpty)
+          //        {return MaterialPageRoute(
+          //          builder: (BuildContext)=> DetailPage("No Detail"));
+          //          }
+          //          return MaterialPageRoute(
+          //          builder: (BuildContext)=> DetailPage(itemName));
 
-            
-           }
+        }
       },
     );
   }
 }
-

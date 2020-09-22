@@ -67,12 +67,7 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
   }
 
   int _radioValue1 = -1;
-  int correctScore = 0;
-  int _radioValue2 = -1;
-  int _radioValue3 = -1;
-  int _radioValue4 = -1;
-  int _radioValue5 = -1;
-
+  
   void _handleRadioValueChange1(int value) {
     setState(() {
       _radioValue1 = value;

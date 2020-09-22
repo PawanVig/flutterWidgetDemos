@@ -23,6 +23,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  splashscreen: ^1.2.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -38,11 +39,15 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+     - assets/h1.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -74,3 +79,11 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+flutter_icons:
+  ios: true
+  android: true
+  # image_path: “assets/launcher/icon.png”
+  image_path_ios: “assets/launcher/icon.png”
+  image_path_android: “assets/launcher/icon.png”
+  # adaptive_icon_background: “lib/assets/launcher/background.png”
+  # adaptive_icon_foreground: “lib/assets/launcher/foreground.png”
