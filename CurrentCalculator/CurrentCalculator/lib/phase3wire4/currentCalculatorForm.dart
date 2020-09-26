@@ -11,12 +11,22 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
   String _power;
   String _voltage;
   String _pf;
+  String _meterType;
 
-  List<String> primary_selected = <String>['', '120/208', '347/600'];
-  List<String> secondary_selected = <String>['', '400', '500/600'];
+  List<String> primary_selected = <String>[
+    '',
+    '27.6/16 KV',
+    '8.32/4.8 KV',
+    '13.8/8 KV'
+  ];
+  List<String> secondary_selected = <String>['', '120/208 V', '347/600 V'];
 
   List<String> _voltage_3phase4wire = <String>[''];
-  List<String> _secondary_voltage_3phase4wire = <String>['', '120', '347/600'];
+  List<String> _secondary_voltage_3phase4wire = <String>[
+    '',
+    '120/208 V',
+    '347/600 V'
+  ];
   String _selected_voltage = '';
 
   List<String> _meterType_3phase4wire = <String>['', 'Primary', 'Secondary'];
@@ -67,7 +77,7 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
   }
 
   int _radioValue1 = -1;
-  
+
   void _handleRadioValueChange1(int value) {
     setState(() {
       _radioValue1 = value;
@@ -75,42 +85,38 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
       switch (_radioValue1) {
         case 0:
           print("in flutter radio func $_radioValue1");
-          _selected_meterType="Primary";
+          _selected_meterType = "Primary";
           // _voltage_3phase4wire = primary_selected;
           setState(() {
-                  // _selected_meterType = newValue;
+            // _selected_meterType = newValue;
 
-                  print("radio new value:$_selected_meterType");
-                  print("in radio set state of prim/secondary");
-                 
-                    _voltage_3phase4wire = primary_selected;
-                  
-                    
-                  
-                  _selected_voltage = "";
-                 // state.didChange(newValue);
-                });
+            print("radio new value:$_selected_meterType");
+            print("in radio set state of prim/secondary");
+
+            _voltage_3phase4wire = primary_selected;
+
+            _selected_voltage = "";
+            // state.didChange(newValue);
+          });
           break;
         case 1:
           print("in flutter radio func $_radioValue1");
-          _selected_meterType="Secondary";
+          _selected_meterType = "Secondary";
           // _voltage_3phase4wire = secondary_selected;
 
           // _voltage_3phase4wire = secondary_selected;
 
           setState(() {
-                  // _selected_meterType = newValue;
+            // _selected_meterType = newValue;
 
-                  print("radio new value:$_selected_meterType");
-                  print("in radio set state of prim/secondary");
-                 
-                    _voltage_3phase4wire = secondary_selected;
-                  
-                    
-                  
-                  _selected_voltage = "";
-                  //state.didChange(newValue);
-                });
+            print("radio new value:$_selected_meterType");
+            print("in radio set state of prim/secondary");
+
+            _voltage_3phase4wire = secondary_selected;
+
+            _selected_voltage = "";
+            //state.didChange(newValue);
+          });
           //Fluttertoast.showToast(msg: 'Try again !',toastLength: Toast.LENGTH_SHORT);
           break;
       }
@@ -157,70 +163,8 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
     }, onSaved: (String value) {
       //'120/121', '120/240'
       print("in saved with value $value");
-      // if (value == "120/208") {
-      //   _voltage = "208";
-      // } else if (value == "347/600") {
-      //   _voltage = "600";
-      // }
+      //_meterType = value;
     });
-    // );
-  }
-
-  Widget _buildMeterType() {
-    return new FormField<String>(
-      builder: (FormFieldState<String> state) {
-        return InputDecorator(
-          //baseStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 25.0),
-          decoration: InputDecoration(
-            //icon: const Icon(Icons.power),
-            //contentPadding: EdgeInsets.all(10),
-            labelText: 'Meter Type',
-            errorText: state.hasError ? state.errorText : null,
-          ),
-          isEmpty: _selected_voltage == '',
-          child: new DropdownButtonHideUnderline(
-            child: new DropdownButton<String>(
-              isExpanded: true,
-              value: _selected_meterType,
-              isDense: true,
-              onChanged: (String newValue) {
-                setState(() {
-                  _selected_meterType = newValue;
-
-                  print("new value:$newValue");
-                  print("in set state of prim/secondary");
-                  if (newValue == "Primary") {
-                    _voltage_3phase4wire = primary_selected;
-                  } else if (newValue == "Secondary") {
-                    _voltage_3phase4wire = secondary_selected;
-                  }
-                  _selected_voltage = "";
-                  state.didChange(newValue);
-                });
-              },
-              items: _meterType_3phase4wire.map((String value) {
-                return new DropdownMenuItem<String>(
-                  value: value,
-                  child: new Text(value),
-                );
-              }).toList(),
-            ),
-          ),
-        );
-      },
-      validator: (val) {
-        print("in validator");
-        return val != '' ? null : 'Please select a Meter Type';
-      },
-      // onSaved: (String value){
-      //   //'120/121', '120/240'
-      //   print("in saved");
-      //     if(value == "Primary")
-      //      { _voltage_3phase4wire = primary_selected;}
-      //       else if(value == "Secondary")
-      //       { _voltage_3phase4wire = secondary_selected;}
-      //     }
-    );
   }
 
   Widget _buildVoltage2() {
@@ -239,7 +183,7 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
             onChanged: (String newValue) {
               setState(() {
                 _selected_voltage = newValue;
-                state.didChange(newValue);
+                state.didChange(_selected_voltage);
               });
             },
             items: _voltage_3phase4wire.map((String value) {
@@ -257,11 +201,24 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
     }, onSaved: (String value) {
       //'120/121', '120/240'
       print("in saved");
-      if (value == "120/208") {
-        _voltage = "208";
-      } else if (value == "347/600") {
-        _voltage = "600";
+      if (_selected_meterType == "Secondary") {
+        if (value == "120/208 V") {
+          _voltage = "208";
+        } else if (value == "347/600 V") {
+          _voltage = "600";
+        }
       }
+      else if (_selected_meterType == "Primary"){
+        if (value == "27.6/16 KV") {
+          _voltage = "27600";
+        } else if (value == "8.32/4.8 KV") {
+          _voltage = "8320";
+        }
+        else if (value == "13.8/8 KV KV") {
+          _voltage = "13800";
+        }
+      }
+           
     });
   }
 
@@ -324,17 +281,78 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
                             print("power is $_power ");
                             print("pf is $_pf ");
                             print("voltage is $_voltage ");
+                            print("meter type is $_selected_meterType");
                             double power = double.parse(_power);
                             double voltage = double.parse(_voltage);
                             double pf = double.parse(_pf);
+
                             double current =
                                 (power * 1000) / (sqrt(3) * voltage * pf);
                             String result_current = current.toStringAsFixed(2);
                             Navigator.pushNamed(context,
-                                "/current_3phase_4wire/$result_current/$power/$voltage/$pf");
+                                "/current_3phase_4wire/$result_current/$power/$voltage/$pf/$_selected_meterType");
                           })
                     ]),
               )),
         ]));
   }
 }
+
+// prevous approach for Drop down for Meter Type  and chaging voltage setting
+
+// Widget _buildMeterType() {
+//   return new FormField<String>(
+//     builder: (FormFieldState<String> state) {
+//       return InputDecorator(
+//         //baseStyle: TextStyle(color: Colors.black, fontWeight: FontWeight.w600, fontSize: 25.0),
+//         decoration: InputDecoration(
+//           //icon: const Icon(Icons.power),
+//           //contentPadding: EdgeInsets.all(10),
+//           labelText: 'Meter Type',
+//           errorText: state.hasError ? state.errorText : null,
+//         ),
+//         isEmpty: _selected_voltage == '',
+//         child: new DropdownButtonHideUnderline(
+//           child: new DropdownButton<String>(
+//             isExpanded: true,
+//             value: _selected_meterType,
+//             isDense: true,
+//             onChanged: (String newValue) {
+//               setState(() {
+//                 _selected_meterType = newValue;
+
+//                 print("new value:$newValue");
+//                 print("in set state of prim/secondary");
+//                 if (newValue == "Primary") {
+//                   _voltage_3phase4wire = primary_selected;
+//                 } else if (newValue == "Secondary") {
+//                   _voltage_3phase4wire = secondary_selected;
+//                 }
+//                 _selected_voltage = "";
+//                 state.didChange(newValue);
+//               });
+//             },
+//             items: _meterType_3phase4wire.map((String value) {
+//               return new DropdownMenuItem<String>(
+//                 value: value,
+//                 child: new Text(value),
+//               );
+//             }).toList(),
+//           ),
+//         ),
+//       );
+//     },
+//     validator: (val) {
+//       print("in validator");
+//       return val != '' ? null : 'Please select a Meter Type';
+//     },
+//     // onSaved: (String value){
+//     //   //'120/121', '120/240'
+//     //   print("in saved");
+//     //     if(value == "Primary")
+//     //      { _voltage_3phase4wire = primary_selected;}
+//     //       else if(value == "Secondary")
+//     //       { _voltage_3phase4wire = secondary_selected;}
+//     //     }
+//   );
+// }
