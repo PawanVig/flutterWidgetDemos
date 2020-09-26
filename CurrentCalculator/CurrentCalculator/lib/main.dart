@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import './phase3wire4/currentCalculatorForm.dart';
 import './phase3wire4/currentCalculatePage2.dart';
+import './phase3wire3/currentCalculatorForm2.dart';
+import './phase3wire3/currentCalculatePage3.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 void main() {
@@ -20,7 +22,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(
           seconds: 5,
           // the widget to run after running your splashscreen for 1 sec
-          navigateAfterSeconds: CurrentCalculator(),
+          navigateAfterSeconds: CurrentCalculator_2(),
           title: Text(' '),
           image: Image.asset('assets/h1.png'),
           backgroundColor: Colors.white,
@@ -42,6 +44,15 @@ class MyApp extends StatelessWidget {
               builder: (BuildContext) => CC_Page2(pathElements[2],
                   pathElements[3], pathElements[4], pathElements[5],pathElements[6]),
             );
+            break;
+          case "current_3phase_3wire":
+            final String current2 = pathElements[2];
+            return MaterialPageRoute(
+              builder: (BuildContext) => CC_Page3(pathElements[2],
+                  pathElements[3], pathElements[4], pathElements[5],pathElements[6]),
+            );
+            break;
+
           default:
             return null;
           //  case "feed" :
