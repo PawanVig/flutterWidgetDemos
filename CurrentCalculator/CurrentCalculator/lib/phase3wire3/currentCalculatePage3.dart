@@ -144,7 +144,7 @@ class _CC_Page3_State extends State<CC_Page3> {
   Widget build(BuildContext context) {
     voltscontroller.text = widget.voltage.toString();
     String meterType = widget.meterType.toString();
-    print("******in screen 2 3 phase 4 wire***** $meterType");
+    print("******in screen 2 3 phase 3 wire***** $meterType");
     double current_val = double.parse(widget.current.toString());
     double voltage_val = double.parse(widget.voltage.toString());
 

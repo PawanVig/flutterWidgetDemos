@@ -51,15 +51,28 @@ class CurrentCalculatorState extends State<CurrentCalculator_2> {
       maxLength: 10,
       keyboardType: TextInputType.number,
       validator: (String value) {
-        double pf = double.tryParse(value);
-
-        if (pf == null || pf <= 0) {
-          return 'Power Factor Must be greater than 0';
-        } else if (pf > 1) {
-          return 'Power Factor Must be between 0 and 1';
+        double pf = 0;
+        print("in pf validator $value");
+        if (value == null || value == "") {
+          return 'Enter a Number greater than 0';
+        } else {
+          double pf = double.tryParse(value);
+          if (pf <= 0 || pf > 1) {
+            return 'Power Factor Must be between 0 and 1';
+          }
         }
 
         return null;
+
+        // double pf = double.tryParse(value);
+
+        // if (pf == null || pf <= 0) {
+        //   return 'Power Factor Must be greater than 0';
+        // } else if (pf > 1) {
+        //   return 'Power Factor Must be between 0 and 1';
+        // }
+
+        // return null;
       },
       onSaved: (String value) {
         _pf = value;
@@ -78,7 +91,6 @@ class CurrentCalculatorState extends State<CurrentCalculator_2> {
           print("in flutter radio func $_radioValue1");
           _selected_meterType = "Primary";
           setState(() {
-
             print("radio new value:$_selected_meterType");
             print("in radio set state of prim/secondary");
 
@@ -92,7 +104,6 @@ class CurrentCalculatorState extends State<CurrentCalculator_2> {
           _selected_meterType = "Secondary";
 
           setState(() {
-
             print("radio new value:$_selected_meterType");
             print("in radio set state of prim/secondary");
 
@@ -138,8 +149,15 @@ class CurrentCalculatorState extends State<CurrentCalculator_2> {
             ],
           ));
     }, validator: (val) {
-      print("in radio validator");
-      return val != '' ? null : 'Please select a Meter type';
+
+      print("in radio validator $val");
+      if (_selected_meterType == null || _selected_meterType == "") {
+        return 'Please select a Meter type';
+      }
+      return null;
+
+      // print("in radio validator");
+      // return val != '' ? null : 'Please select a Meter type';
     }, onSaved: (String value) {
       print("in saved with value $value");
     });
@@ -173,22 +191,28 @@ class CurrentCalculatorState extends State<CurrentCalculator_2> {
         ),
       );
     }, validator: (val) {
-      print("in validator");
-      return val != '' ? null : 'Please select a Voltage';
+
+       double vol_val = 0;
+      print("in validator _buildVoltage2 with $val");
+      if (val == null || val == "") {
+        return 'Please select a Voltage';
+      } 
+      return null;
+      //return val != '' ? null : 'Please select a Voltage';
     }, onSaved: (String value) {
       //'120/121', '120/240'
       print("in saved");
       if (_selected_meterType == "Secondary") {
         if (value == "600 V") {
           _voltage = "600";
-        } 
+        }
         // else if (value == "347/600 V") {
         //   _voltage = "600";
         // }
       } else if (_selected_meterType == "Primary") {
         if (value == "44 KV") {
           _voltage = "44000";
-        } 
+        }
       }
     });
   }
@@ -261,7 +285,7 @@ class CurrentCalculatorState extends State<CurrentCalculator_2> {
                                 (power * 1000) / (sqrt(3) * voltage * pf);
                             String result_current = current.toStringAsFixed(2);
                             Navigator.pushNamed(context,
-                                "/current_3phase_3wire/$result_current/$power/$voltage/$pf/$_selected_meterType");
+                                "/current_3phase_3wire/$result_current/$power/$voltage/$pf/$_selected_meterType").then( (_) => _formkey.currentState.reset());
                           })
                     ]),
               )),

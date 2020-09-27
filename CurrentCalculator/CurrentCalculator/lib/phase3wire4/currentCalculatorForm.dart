@@ -307,7 +307,7 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
                                 (power * 1000) / (sqrt(3) * voltage * pf);
                             String result_current = current.toStringAsFixed(2);
                             Navigator.pushNamed(context,
-                                "/current_3phase_4wire/$result_current/$power/$voltage/$pf/$_selected_meterType");
+                                "/current_3phase_4wire/$result_current/$power/$voltage/$pf/$_selected_meterType").then( (_) => _formkey.currentState.reset());
                           })
                     ]),
               )),
