@@ -3,6 +3,7 @@ import './phase3wire4/currentCalculatorForm.dart';
 import './phase3wire4/currentCalculatePage2.dart';
 import './phase3wire3/currentCalculatorForm2.dart';
 import './phase3wire3/currentCalculatePage3.dart';
+import 'circuitTypeList.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 void main() {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       home: SplashScreen(
           seconds: 5,
           // the widget to run after running your splashscreen for 1 sec
-          navigateAfterSeconds: CurrentCalculator_2(),
+          navigateAfterSeconds: CircuitType(),//CurrentCalculator_2(),
           title: Text(' '),
           image: Image.asset('assets/h1.png'),
           backgroundColor: Colors.white,
@@ -38,6 +39,14 @@ class MyApp extends StatelessWidget {
         }
 
         switch (pathElements[1]) {
+          case "3Phase4Wire":
+              return MaterialPageRoute(
+              builder: (BuildContext) =>CurrentCalculator());
+             break;
+            case "3Phase3Wire":
+              return MaterialPageRoute(
+              builder: (BuildContext) =>CurrentCalculator_2());
+             break;        
           case "current_3phase_4wire":
             final String current = pathElements[2];
             return MaterialPageRoute(
