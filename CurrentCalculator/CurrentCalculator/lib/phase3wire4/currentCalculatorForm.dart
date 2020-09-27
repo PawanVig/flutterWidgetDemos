@@ -60,12 +60,15 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
       maxLength: 10,
       keyboardType: TextInputType.number,
       validator: (String value) {
-        double pf = double.tryParse(value);
-
-        if (pf == null || pf <= 0) {
-          return 'Power Factor Must be greater than 0';
-        } else if (pf > 1) {
-          return 'Power Factor Must be between 0 and 1';
+        double pf = 0;
+         print ("in pf validator $value");
+        if (value == null || value == "") {
+          return 'Enter a Number greater than 0';
+        } else {
+          double pf = double.tryParse(value);
+          if (pf <= 0 || pf > 1) {
+            return 'Power Factor Must be between 0 and 1';
+          }
         }
 
         return null;
@@ -158,8 +161,11 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
             ],
           ));
     }, validator: (val) {
-      print("in radio validator");
-      return val != '' ? null : 'Please select a Meter type';
+      print("in radio validator $val");
+      if (_selected_meterType == null || _selected_meterType == "") {
+        return 'Please select a Meter type';
+      }
+      return null;
     }, onSaved: (String value) {
       //'120/121', '120/240'
       print("in saved with value $value");
@@ -196,8 +202,22 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
         ),
       );
     }, validator: (val) {
-      print("in validator");
-      return val != '' ? null : 'Please select a Voltage';
+      double vol_val = 0;
+      print("in validator _buildVoltage2 with $val");
+      if (val == null || val == "") {
+        return 'Please select a Voltage';
+      } 
+      // else {
+      //   vol_val = double.tryParse(val);
+      //   if (vol_val <= 0) {
+      //     return 'Voltage Must be greater than 0';
+      //   }
+      // }
+
+      // else if (val == '' || val == null) {
+      //   return 'Please select a Voltage';
+      // }
+      return null;
     }, onSaved: (String value) {
       //'120/121', '120/240'
       print("in saved");
@@ -207,18 +227,15 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
         } else if (value == "347/600 V") {
           _voltage = "600";
         }
-      }
-      else if (_selected_meterType == "Primary"){
+      } else if (_selected_meterType == "Primary") {
         if (value == "27.6/16 KV") {
           _voltage = "27600";
         } else if (value == "8.32/4.8 KV") {
           _voltage = "8320";
-        }
-        else if (value == "13.8/8 KV KV") {
+        } else if (value == "13.8/8 KV KV") {
           _voltage = "13800";
         }
       }
-           
     });
   }
 
