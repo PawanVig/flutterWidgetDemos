@@ -7,8 +7,9 @@ class CC_Page2 extends StatefulWidget {
   final String voltage;
   final String pf;
   final String meterType;
+  final String _voltage_string;
 
-  CC_Page2(this.current, this.power, this.voltage, this.pf, this.meterType);
+  CC_Page2(this.current, this.power, this.voltage, this.pf, this.meterType, this._voltage_string);
 
   @override
   State<StatefulWidget> createState() {
@@ -56,7 +57,7 @@ class _CC_Page2_State extends State<CC_Page2> {
     if (meterType == "Primary") {
       return -3;
     } else if (meterType == "Secondary") {
-      return (sqrt(3) * voltage_val * current_val).round();
+      return ((sqrt(3) * voltage_val * current_val)/1000).round();
     }
   }
 
@@ -74,7 +75,7 @@ class _CC_Page2_State extends State<CC_Page2> {
       if (voltage_val == 208.0) {
         return "No PT required";
       } else if (voltage_val == 600.0) {
-        return "360:120 PT";
+        return "600:120 PT";
       }
     }
   }
@@ -140,7 +141,10 @@ class _CC_Page2_State extends State<CC_Page2> {
 
   @override
   Widget build(BuildContext context) {
-    voltscontroller.text = widget.voltage.toString();
+     print("#####Voltage String######");
+    print(widget._voltage_string.toString());
+    voltscontroller.text = widget._voltage_string.toString();
+    //voltscontroller.text = widget.voltage.toString();
     String meterType = widget.meterType.toString();
     print("******in screen 2 3 phase 4 wire***** $meterType");
     double current_val = double.parse(widget.current.toString());
@@ -153,13 +157,16 @@ class _CC_Page2_State extends State<CC_Page2> {
       purposedServiceSizeController.text = pss.toString();
     }
     purposedServiceSizeController.text = pss.toString();
-    currentcontroller.text = widget.current.toString();
+    String current_value =widget.current.toString();
+    currentcontroller.text = "$current_value Amps";
+    //currentcontroller.text = widget.current.toString();
 
     int ts = transformerSize(current_val, voltage_val, meterType);
     if (ts < 0) {
       transformerSizeController.text = "Customer Owned";
     } else {
-      transformerSizeController.text = ts.toString();
+      transformerSizeController.text = "$ts KVA";
+      // transformerSizeController.text = ts.toString();
     }
 
     proposedPtSizeController.text = purposedPtSize(voltage_val, meterType);
@@ -294,7 +301,7 @@ class _CC_Page2_State extends State<CC_Page2> {
                       enabled: false),
                   TextField(
                       decoration: InputDecoration(
-                          labelText: "Transformer Size",
+                          labelText: "Min. Transformer Kva Reqd.",
                           labelStyle: TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.w400)),
                       style: TextStyle(
@@ -379,7 +386,7 @@ class _CC_Page2_State extends State<CC_Page2> {
                       enabled: false),
                   TextField(
                       decoration: InputDecoration(
-                          labelText: "Transformer Size",
+                          labelText: "Min. Transformer Kva Reqd.",
                           labelStyle: TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.w400)),
                       style: TextStyle(

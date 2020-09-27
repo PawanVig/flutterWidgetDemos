@@ -10,6 +10,7 @@ class CurrentCalculator extends StatefulWidget {
 class CurrentCalculatorState extends State<CurrentCalculator> {
   String _power;
   String _voltage;
+  String _voltage_string;
   String _pf;
   String _meterType;
 
@@ -224,16 +225,21 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
       if (_selected_meterType == "Secondary") {
         if (value == "120/208 V") {
           _voltage = "208";
+          _voltage_string = "120 | 208 V";
         } else if (value == "347/600 V") {
           _voltage = "600";
+          _voltage_string = "347 | 600 V";
         }
       } else if (_selected_meterType == "Primary") {
         if (value == "27.6/16 KV") {
           _voltage = "27600";
+          _voltage_string = "27.6 | 16 KV";
         } else if (value == "8.32/4.8 KV") {
           _voltage = "8320";
-        } else if (value == "13.8/8 KV KV") {
+          _voltage_string = "8.32 | 4.8 KV";
+        } else if (value == "13.8/8 KV") {
           _voltage = "13800";
+          _voltage_string = "13.8 | 8 KV";
         }
       }
     });
@@ -307,7 +313,7 @@ class CurrentCalculatorState extends State<CurrentCalculator> {
                                 (power * 1000) / (sqrt(3) * voltage * pf);
                             String result_current = current.toStringAsFixed(2);
                             Navigator.pushNamed(context,
-                                "/current_3phase_4wire/$result_current/$power/$voltage/$pf/$_selected_meterType").then( (_) => _formkey.currentState.reset());
+                                "/current_3phase_4wire/$result_current/$power/$voltage/$pf/$_selected_meterType/$_voltage_string").then( (_) => _formkey.currentState.reset());
                           })
                     ]),
               )),

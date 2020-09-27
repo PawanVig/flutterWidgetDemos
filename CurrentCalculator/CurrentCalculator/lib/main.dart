@@ -51,14 +51,14 @@ class MyApp extends StatelessWidget {
             final String current = pathElements[2];
             return MaterialPageRoute(
               builder: (BuildContext) => CC_Page2(pathElements[2],
-                  pathElements[3], pathElements[4], pathElements[5],pathElements[6]),
+                  pathElements[3], pathElements[4], pathElements[5],pathElements[6],pathElements[7]),
             );
             break;
           case "current_3phase_3wire":
             final String current2 = pathElements[2];
             return MaterialPageRoute(
               builder: (BuildContext) => CC_Page3(pathElements[2],
-                  pathElements[3], pathElements[4], pathElements[5],pathElements[6]),
+                  pathElements[3], pathElements[4], pathElements[5],pathElements[6],pathElements[7]),
             );
             break;
 
